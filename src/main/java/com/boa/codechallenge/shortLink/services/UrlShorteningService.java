@@ -28,8 +28,8 @@ public class UrlShorteningService implements IUrlShorteningService {
         sb.append("/");
         sb.append(counter);
 
-        TimedUrl timedUrl = new TimedUrl(urlLoc.getHost()+counter, LocalTime.now());
-        urlTables.put(url, timedUrl);
+        TimedUrl timedUrl = new TimedUrl(url, LocalTime.now());
+        urlTables.put(sb.toString(), timedUrl);
         return sb.toString();
     }
 
