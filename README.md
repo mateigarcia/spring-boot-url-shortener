@@ -1,3 +1,7 @@
+# Requiements
+-   Java 8 or higher
+-   Apache maven 3.6
+-   Installed AWS Cli
 # spring-boot-url-shortener Installation
 To build please run the following command. It will build and run Unit tests
 
