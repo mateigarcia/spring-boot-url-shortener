@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "bd7e90ad-a6bc-4f46-8924-8572fc285ae1",
+		"name": "bankOfAmericaChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post to get a Short Link",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"link\":\"https://www.google.com/search?q=bank+of+america&oq=bank+o&aqs=chrome.0.0i67i355i433j46i67i199i291i433j69i57j0i67j46i199i291i433j0i433j0l2.1852j0j15&sourceid=chrome&ie=UTF-8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://shortLink.eu-west-1.elasticbeanstalk.com/link",
+					"protocol": "http",
+					"host": [
+						"shortLink",
+						"eu-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get to redirect to long link",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://shortlink.eu-west-1.elasticbeanstalk.com/link?shortUrl=google.com/1",
+					"protocol": "http",
+					"host": [
+						"shortlink",
+						"eu-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"link"
+					],
+					"query": [
+						{
+							"key": "shortUrl",
+							"value": "google.com/1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

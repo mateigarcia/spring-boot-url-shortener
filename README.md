@@ -22,6 +22,23 @@ NOTE:This runs on a default VPC. Otherwise the deployment instructions would be 
 NOTE:This should be run by someone with admin IAM permissions. The scripts will create an S3 bucket plus 
 Beanstalk will create automatically the instance, ALB, security groups and do the deployment of the appplication.
 
+# Usage
+There are only 2 services. I will include a postman collection to test the application
+- A post to http://shortLink.eu-west-1.elasticbeanstalk.com/link with a body of 
+
+`{
+     "link":"https://www.google.com/search?q=bank+of+america&oq=bank+o&aqs=chrome.0.0i67i355i433j46i67i199i291i433j69i57j0i67j46i199i291i433j0i433j0l2.1852j0j15&sourceid=chrome&ie=UTF-8"
+ }`
+ 
+ Should return something similar to
+ 
+ `{
+      "shortUrl": "google.com/1"
+  }`
+- A Get to http://shortlink.eu-west-1.elasticbeanstalk.com/link?shortUrl=google.com/1 should redirect to the initial link
+Unless more than 100 seconds have passed since the link creation
+
+
 # Improvements and challenges
 -The main problem of my approach is that all links are hold in memory, so the application does not scale. Ideally we should be saving the links to a DB.
 Currently, even if we increase the number of instances, the application won't scale because each instance will have it's own in memory table with different values,
@@ -29,5 +46,6 @@ so having a common place where both instances could access is a must. On the oth
 -Currently also the shortLinkApplication.linkTimeToLiveSeconds parameter is in the properties file. This approach is fine if it is to stay as a constant, but if we want
 to change the value during execution time, AWS paramStore would be more adequate
 -There are not (and should be) integration tests (Cucumber is a suggestion)
+-Swagger spec should be added
 -The application is currently open to the world and vulnerable to DOS attacks. Mechanisms should be put in place to avoid this
 -Also is HTTP with no security (although we might want to keep this if is meant for public use) 
