@@ -1,5 +1,5 @@
 # spring-boot-url-shortener Installation
-To build please run the following command 
+To build please run the following command. It will build and run Unit tests
 
 `mvn clean install`
 
@@ -15,5 +15,19 @@ Will set the time to live of the link in memory to only 10 seconds (currently is
 
 # Deploy to the cloud
 Since this is a spring boot application, the easiest way to deploy it to the cloud is using elasticBeanstalk.
-once the application is built, please run createBeanstalkEnvironment.sh in the ${project.root}/scripts folder. The script should create an s3 bucket, upload the jar to it and deploy the application to ebs.
+once the application is built, please run 
+`createBeanstalkEnvironment.sh` or `createBeanstalkEnvironment.bat` if on Windows
+in the ${project.root}/scripts folder. The script should create an s3 bucket, upload the jar to it and deploy the application to ebs.
+NOTE:This runs on a default VPC. Otherwise the deployment instructions would be more complex.
+NOTE:This should be run by someone with admin IAM permissions. The scripts will create an S3 bucket plus 
+Beanstalk will create automatically the instance, ALB, security groups and do the deployment of the appplication.
 
+# Improvements and challenges
+-The main problem of my approach is that all links are hold in memory, so the application does not scale. Ideally we should be saving the links to a DB.
+Currently, even if we increase the number of instances, the application won't scale because each instance will have it's own in memory table with different values,
+so having a common place where both instances could access is a must. On the other side, no DB means almost no extra latency
+-Currently also the shortLinkApplication.linkTimeToLiveSeconds parameter is in the properties file. This approach is fine if it is to stay as a constant, but if we want
+to change the value during execution time, AWS paramStore would be more adequate
+-There are not (and should be) integration tests (Cucumber is a suggestion)
+-The application is currently open to the world and vulnerable to DOS attacks. Mechanisms should be put in place to avoid this
+-Also is HTTP with no security (although we might want to keep this if is meant for public use) 
