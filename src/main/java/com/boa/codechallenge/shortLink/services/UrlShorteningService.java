@@ -1,6 +1,8 @@
 package com.boa.codechallenge.shortLink.services;
 
+import com.boa.codechallenge.shortLink.config.PropertiesReader;
 import com.boa.codechallenge.shortLink.entity.TimedUrl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
@@ -10,6 +12,9 @@ import java.util.HashMap;
 
 @Component
 public class UrlShorteningService implements IUrlShorteningService {
+
+    @Autowired
+    private PropertiesReader propertiesReader;
 
     private HashMap<String, TimedUrl> urlTables;
     long counter;
@@ -36,7 +41,9 @@ public class UrlShorteningService implements IUrlShorteningService {
     @Override
     public String getUrlFromShortLink(String shortLink) {
         TimedUrl url = urlTables.get(shortLink);
-        if(url == null){
+        LocalTime beforeThan = LocalTime.now().minusSeconds(propertiesReader.getTimeToLiveSeconds());
+
+        if(url == null || url.getTime().isBefore(beforeThan)){
             return null;
         }
         return url.getUrl();

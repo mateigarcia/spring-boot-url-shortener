@@ -12,6 +12,7 @@
 	<artifactId>shortLink</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shortLink</name>
+	<packaging>jar</packaging>
 	<description>Code challenge for Bank of America</description>
 
 	<properties>
@@ -45,10 +46,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -58,32 +60,38 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.4.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
 			</plugin>
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>beanstalk</id>
-			<build>
-				<finalName>${project.name}-eb</finalName>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<configuration>
-							<excludes>
-								<exclude>**/cloud/config/*.java</exclude>
-							</excludes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+<!--	<profiles>-->
+<!--		<profile>-->
+<!--			<id>beanstalk</id>-->
+<!--			<build>-->
+<!--				<finalName>${project.name}-eb</finalName>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<groupId>org.springframework.boot</groupId>-->
+<!--						<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--					</plugin>-->
+<!--					<plugin>-->
+<!--						<groupId>org.apache.maven.plugins</groupId>-->
+<!--						<artifactId>maven-compiler-plugin</artifactId>-->
+<!--						<configuration>-->
+<!--							<excludes>-->
+<!--								<exclude>**/cloud/config/*.java</exclude>-->
+<!--							</excludes>-->
+<!--						</configuration>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+<!--	</profiles>-->
 
 </project>
