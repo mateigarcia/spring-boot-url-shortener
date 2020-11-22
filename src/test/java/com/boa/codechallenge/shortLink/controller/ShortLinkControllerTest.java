@@ -64,7 +64,4 @@ public class ShortLinkControllerTest extends TestCase {
         assertTrue(response.getHeaders().get("Location").contains("http://fullurl.com"));
     }
 
-    @Test
-    public void testGetShortLink() {
-    }
 }
